@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <direct.h>
 #include <expat.h>
 
 
@@ -45,11 +46,22 @@ main(void) {
 	int done;
 	int depth = 0;
 	FILE *infile;
+	char* buffer;
 
-	infile = fopen("C:\\Users\\sagee\\source\\repos\\ConsoleApplication4\\infile.txt", "r+");
+	// Get the current working directory:
+	if ((buffer = _getcwd(NULL, 0)) == NULL)
+		perror("_getcwd error");
+	else
+	{
+		printf("%s \nLength: %zu\n", buffer, strlen(buffer));
+		free(buffer);
+	}
+//	infile = fopen("C:\\Users\\sagee\\source\\repos\\ConsoleApplication4\\infile.txt", "r+");
+	infile = fopen("infile.txt", "r+");
 	if (infile==NULL)
 	{
 		printf("bad\n");
+		return 1;
 	}
 	if (!parser) {
 		fprintf(stderr, "Couldn't allocate memory for parser\n");
